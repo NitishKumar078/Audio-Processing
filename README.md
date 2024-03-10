@@ -35,15 +35,3 @@ Download FFMPEG save in C Drive &  set path in environmental Variable
 ```bash
   https://ffmpeg.org/download.html#build-windows
 ```
-
-Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-Start the server
-
-```bash
-  Click Run on "Run Terminal"
-```
