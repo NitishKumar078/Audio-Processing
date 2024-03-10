@@ -22,18 +22,20 @@ def list_desktop_files():
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
         try:
-            os.remove(".audio.wav")
-            os.remove(".transcription.txt")
+            if os.path.isfile('./.audio.wav'):
+                os.remove(".audio.wav")
+            if os.path.isfile('./.transcription.txt'):
+                os.remove(".transcription.txt")
             # list_desktop_files()
-        except FileNotFoundError:
-            print("One or both files were not found.")
+        except FileNotFoundError as e:
+            print("Somthing went wrong : ",e )
     root.destroy()
 
 def select_file():
     filetypes = (('Video files', '*.mp4'),)
     selected_filename = fd.askopenfilename(
         title='Select a file',
-        initialdir='/',
+        initialdir='./',
         filetypes=filetypes)
     if selected_filename:
         file_path.set(selected_filename)  # Update the selected file path
@@ -95,8 +97,10 @@ def stop_speech():
 
 def DAudio():
     # Remove the hidden attribute from the file
-    win32file.SetFileAttributes("audio.wav", win32con.FILE_ATTRIBUTE_NORMAL)
-
+    if messagebox.askokcancel("Download", " Do you want to download ?"):
+            win32file.SetFileAttributes(".audio.wav", win32con.FILE_ATTRIBUTE_NORMAL)
+            os.rename('.audio.wav', 'audio.wav')
+            
 def DTxt(text_widget):
     # Remove the hidden attribute from the file
     text = text_widget.get('1.0', 'end-1c')
@@ -104,6 +108,7 @@ def DTxt(text_widget):
         with open(".transcription.txt", "w", encoding="utf-8") as f:
             f.write(text) 
     win32file.SetFileAttributes("transcription.txt", win32con.FILE_ATTRIBUTE_NORMAL)
+    os.rename('.transcription.wav', 'transcription.wav')
 
 def add_text(text_widget, text):
     # Use the insert method to add text at the end of the Text widget
