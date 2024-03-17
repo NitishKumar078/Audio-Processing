@@ -104,11 +104,11 @@ def DAudio():
 def DTxt(text_widget):
     # Remove the hidden attribute from the file
     text = text_widget.get('1.0', 'end-1c')
+    win32file.SetFileAttributes(".transcription.txt", win32con.FILE_ATTRIBUTE_NORMAL)
+    os.rename('.transcription.txt', 'transcription.txt')
     if messagebox.askokcancel("Update", " Do you want to update the text file ?"):
-        with open(".transcription.txt", "w", encoding="utf-8") as f:
+        with open("transcription.txt", "w", encoding="utf-8") as f:
             f.write(text) 
-    win32file.SetFileAttributes("transcription.txt", win32con.FILE_ATTRIBUTE_NORMAL)
-    os.rename('.transcription.wav', 'transcription.wav')
 
 def add_text(text_widget, text):
     # Use the insert method to add text at the end of the Text widget
